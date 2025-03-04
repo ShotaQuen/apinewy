@@ -43,7 +43,7 @@ app.get('/api/lahelu', async (req, res) => {
   }
 
   try {
-    const { laheluSearch } = require('./scrape/ikann')
+    const { laheluSearch } = require('./scrape')
     const response = await laheluSearch(q);    res.status(200).json({
       status: true,
       creator: 'ikann',
@@ -62,7 +62,7 @@ app.get('/api/ttstalk', async (req, res) => {
   }
 
   try {
-    const { ttstalk } = require('./scrape/ikann')
+    const { ttstalk } = require('./scrape')
     const response = await ttstalk(q);    res.status(200).json({
       status: true,
       creator: 'ikann',
@@ -72,6 +72,35 @@ app.get('/api/ttstalk', async (req, res) => {
     res.status(500).json({ status: false, error: error.message });
   }
 });
+
+app.get('/api/viooai', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { viooai } = require('./scrape')
+    const response = await viooai(q);    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.use((req, res, next) => {
+  res.status(404).send("Halaman tidak ditemukan");
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Ada kesalahan pada server');
+});
+
 
 app.use((req, res, next) => {
   res.status(404).send("Halaman tidak ditemukan");
