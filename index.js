@@ -54,7 +54,7 @@ app.get('/api/lahelu', async (req, res) => {
   }
 });
 
-app.get('/api/ttstalk', async (req, res) => {
+app.get('/api/githubSearch', async (req, res) => {
   const { q } = req.query;
 
   if (!q) {
@@ -62,8 +62,63 @@ app.get('/api/ttstalk', async (req, res) => {
   }
 
   try {
+    const { githubSearch } = require('./scrape')
+    const response = await githubSearch(q);    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/pin', async (req, res) => {
+  const { q } = req.query;
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { pin } = require('./scrape')
+    const response = await pin(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/ttstalk', async (req, res) => {
+  const { q } = req.query;
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+  try {
     const { ttstalk } = require('./scrape')
     const response = await ttstalk(q);    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/npmStalk', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { npmStalk } = require('./scrape')
+    const response = await npmStalk(q);    res.status(200).json({
       status: true,
       creator: 'ikann',
       data: response

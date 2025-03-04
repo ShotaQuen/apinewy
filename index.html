@@ -62,6 +62,8 @@
                 <div id="search" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
                     <div class="py-2 collapse-inner rounded">
                       <a class="collapse-item" href="api/lahelu?q=anime" target="_blank">Lahelu</a>
+                      <a class="collapse-item" href="api/githubSearch?q=webapi" target="_blank">Github Search</a>
+                      <a class="collapse-item" href="api/pin?q=ikann" target="_blank">Pinterest</a>
                     </div>
                 </div>
             </li>
@@ -75,6 +77,7 @@
                     <div class="py-2 collapse-inner rounded">
                       <div class="py-2 collapse-inner rounded">
                       <a class="collapse-item" href="api/ttstalk?q=anime" target="_blank">Tiktok Stalk</a>
+                      <a class="collapse-item" href="api/npmStalk?q=ikanngeming" target="_blank">Npm Stalk</a>
                     </div>
                     </div>
                 </div>
@@ -117,6 +120,22 @@
                     </div>
 
                     <div class="row mb-3">
+                        
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card h-50">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1">Post</div>
+                                            <span id="getawayCont" class="h5 mb-0 font-weight-bold">0 </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-fire" ></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card h-50">
@@ -189,7 +208,11 @@
     <script src="https://zeltoria.github.io/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="https://zeltoria.github.io/js/ruang-admin.min.js"></script>
     <script src="https://zeltoria.github.io/js/menu.js"></script>
-    
+    <script>
+      const countCollapseItem = document.querySelectorAll('.collapse-item').length;
+      
+        document.getElementById('getawayCont').textContent = `${countCollapseItem}`;
+    </script>
 
 </body>
 
