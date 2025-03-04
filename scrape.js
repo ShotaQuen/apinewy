@@ -114,8 +114,6 @@ async function npmStalk(pname) {
   }
 }
 
-> const axios = require('axios');
-
 async function getCookies() {
     try {
         const response = await axios.get('https://www.pinterest.com/csrf_error/');
