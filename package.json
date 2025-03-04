@@ -1,40 +1,23 @@
 {
-  "name": "zeltoria-api",
-  "version": "4.0.0",
-  "description": "My Rest Api Project",
+  "name": "Ikann",
+  "version": "1.0.0",
+  "description": "Simple API",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "keywords": [
-    "simple",
-    "api",
-    "rest",
-    "api"
-  ],
-  "author": "Zeltoria",
-  "license": "ISC",
   "dependencies": {
-    "@xct007/frieren-scraper": "^0.0.2",
-    "axios": "^0.21.1",
-    "base-64": "^1.0.0",
-    "base32": "0.0.6",
-    "caliph-api": "^1.0.0",
-    "chalk": "^4.1.0",
-    "cheerio": "^1.0.0-rc.5",
+    "@types/node": "^18.0.6",
+    "axios": "^1.6.8",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "form-data": "^4.0.0",
-    "jquery": "^3.7.0",
-    "lolkil-scraper": "^1.0.6",
-    "moment": "^2.29.1",
+    "express": "^4.19.2",
     "mongoose": "^6.9.2",
-    "nekopoi-scraper": "^2.7.1",
-    "node-fetch": "^2.6.1",
-    "popper.js": "^1.16.1",
-    "request": "^2.88.2",
-    "scraper-jsc": "^0.0.3",
-    "ssl-express-www": "^3.0.7"
-  },
+    "ssl-express-www": "^3.2.1",
+    "@distube/ytdl-core": "^4.16.3",
+    "form-data": "^4.0.0",
+    "fs": "0.0.1-security",
+    "child_process": "^1.0.2",
+    "crypto": "^1.0.1",
+    "cheerio": "^1.0.0"
+  }
 }
