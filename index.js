@@ -128,8 +128,6 @@ app.get('/api/npmStalk', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 app.get('/api/ffStalk', async (req, res) => {
   const { q } = req.query;
   if (!q) {
@@ -147,7 +145,6 @@ app.get('/api/ffStalk', async (req, res) => {
   }
 });
 
->>>>>>> dee6a1d (Pesan perubahan yang jelas)
 app.get('/api/viooai', async (req, res) => {
   const { q } = req.query;
 
