@@ -135,10 +135,11 @@ app.get('/api/ffStalk', async (req, res) => {
   }
   try {
     const { ffStalk } = require('./scrape')
-    const response = await ffStalk.stalk(q);    res.status(200).json({
+    const response = await ffStalk.stalk(q);
+    res.status(200).json({
       status: true,
       creator: 'ikann',
-      data: response.data
+      data: response
     });
   } catch (error) {
     res.status(500).json({ status: false, error: error.message });
