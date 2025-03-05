@@ -207,9 +207,6 @@ async function pin(query) {
         return [];
     }
 }
-
-<<<<<<< HEAD
-=======
 const ffStalk = {
   api: {
     base: "https://tools.freefireinfo.in/profileinfo.php"
@@ -414,17 +411,12 @@ const ffStalk = {
   }
 };
 
->>>>>>> dee6a1d (Pesan perubahan yang jelas)
 module.exports = { 
   laheluSearch,
   ttstalk,
   viooai,
   githubSearch,
   npmStalk,
-<<<<<<< HEAD
-  pin
-=======
   pin,
   ffStalk
->>>>>>> dee6a1d (Pesan perubahan yang jelas)
 }
