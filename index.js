@@ -181,7 +181,7 @@ app.get('/api/orkut/createPayment', async (req, res) => {
     res.status(200).json({
       status: true,
       creator: 'ikann',
-      data: response
+      data: response.result
     });
   } catch (error) {
     res.status(500).json({ status: false, error: error.message });
