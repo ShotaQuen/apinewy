@@ -83,6 +83,20 @@ Api
 </div>
 </div>
 </li>
+
+<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#orkut" aria-expanded="true" aria-controls="collapseBootstrap">
+<i class="fa fa-money"></i>
+<span>Orkut</span>
+</a>
+<div id="orkut" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+<div class="py-2 collapse-inner rounded">
+<div class="py-2 collapse-inner rounded">
+<a class="collapse-item" href="/api/orkut/createPayment?amount=&codeqr=" target="_blank">Create Payment</a>
+</div>
+</div>
+</div>
+</li>
 <hr class="sidebar-divider">
 </ul>
  
@@ -128,22 +142,6 @@ Api
 <div class="col mr-2">
 <div class="text-xs font-weight-bold text-uppercase mb-1">Post</div>
 <span id="getawayCont" class="h5 mb-0 font-weight-bold">0 </span>
-</div>
-<div class="col-auto">
-<i class="fa fa-fire" ></i>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="col-xl-3 col-md-6 mb-4">
-<div class="card h-50">
-<div class="card-body">
-<div class="row no-gutters align-items-center">
-<div class="col mr-2">
-<div class="text-xs font-weight-bold text-uppercase mb-1">Module</div>
-<span id="moduleCont" class="h5 mb-0 font-weight-bold">0 </span>
 </div>
 <div class="col-auto">
 <i class="fa fa-fire" ></i>
@@ -228,10 +226,6 @@ Made by
 const countCollapseItem = document.querySelectorAll('.collapse-item').length;
 
 document.getElementById('getawayCont').textContent = `${countCollapseItem}`;
-
-const moduleContt = document.querySelectorAll('.module').length;
-
-document.getElementById('moduleCont').textContent = `${moduleContt}`;
 </script>
 
 </body>

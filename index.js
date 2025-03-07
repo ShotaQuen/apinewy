@@ -165,6 +165,29 @@ app.get('/api/viooai', async (req, res) => {
   }
 });
 
+app.get('/api/orkut/createPayment', async (req, res) => {
+  const { amount, codeqr } = req.query;
+
+  if (!amount) {
+    return res.status(400).json({ status: false, error: "Tolong masukkan harganya" });
+  }
+  if (!codeqr) {
+    return res.status(400).json({ status: false, error: "Tolong masukkan codeqr" });
+  }
+
+  try {
+    const { createPayment } = require('./scrape')
+    const response = await createPayment(amount, codeqr);    
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
 app.use((req, res, next) => {
   res.status(404).send("Halaman tidak ditemukan");
 });

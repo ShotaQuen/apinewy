@@ -411,6 +411,48 @@ const ffStalk = {
   }
 };
 
+async function createPayment(amount, codeqr) {
+    const apiUrl = "https://linecloud.my.id/api/orkut/createpayment";
+    const apikey = "Line";
+
+    try {
+        const response = await fetch(`${apiUrl}?apikey=${apikey}&amount=${amount}&codeqr=${codeqr}`, {
+            method: "GET",
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error("Error creating payment:", error);
+        return { success: false, message: error.message };
+    }
+}
+
+async function cekStatus(merchant, keyorkut) {
+    const apiUrl = "https://linecloud.my.id/api/orkut/cekstatus";
+    const apikey = "Line";
+
+    try {
+        const response = await fetch(`${apiUrl}?apikey=${apikey}&merchant=${merchant}&keyorkut=${keyorkut}`, {
+            method: "GET",
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error("Error creating payment:", error);
+        return { success: false, message: error.message };
+    }
+}
+
 module.exports = { 
   laheluSearch,
   ttstalk,
@@ -418,5 +460,7 @@ module.exports = {
   githubSearch,
   npmStalk,
   pin,
-  ffStalk
+  ffStalk,
+  createPayment,
+  cekStatus
 }
