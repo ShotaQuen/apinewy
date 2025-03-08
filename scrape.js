@@ -453,6 +453,72 @@ async function cekStatus(merchant, keyorkut) {
     }
 }
 
+async function mod(query) {
+  try {
+    const headers = {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, seperti Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Accept-Language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'
+    };
+
+    const { data } = await axios.get(`https://modcombo.com/id/?s=${encodeURIComponent(query)}`, { headers });
+    const $ = cheerio.load(data);
+
+    let hasil = [];
+
+    $('li a.blog.search').each((_, el) => {
+      const image = $(el).find('figure img').attr('data-src') || $(el).find('figure img').attr('src'); // Cek data-src dulu
+      const title = $(el).find('.title').text().trim();
+      const link = $(el).attr('href');
+
+      if (image) {
+        hasil.push({
+          title,
+          image: image.startsWith('//') ? 'https:' + image : image, // Tambahkan https jika perlu
+          link
+        });
+      }
+    });
+
+    console.log(hasil.length ? hasil : 'Tidak ditemukan hasil.');
+  } catch (e) {
+    console.error('Error:', e.message);
+  }
+}
+
+async function anime(query) {
+    try {
+        const searchUrl = `https://otakudesu.cloud/?s=${encodeURIComponent(query)}&post_type=anime`;
+        const { data } = await axios.get(searchUrl, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            }
+        });
+
+        const $ = cheerio.load(data);
+        const results = [];
+
+        $('.chivsrc > li').each((i, el) => {
+            const image = $(el).find('img').attr('src');
+            const title = $(el).find('h2 a').text().trim();
+            const url = $(el).find('h2 a').attr('href');
+            const genres = [];
+            $(el).find('.set').eq(0).find('a').each((_, genre) => {
+                genres.push($(genre).text().trim());
+            });
+            const status = $(el).find('.set').eq(1).text().replace('Status :', '').trim();
+            const rating = $(el).find('.set').eq(2).text().replace('Rating :', '').trim();
+
+            if (title && url) {
+                results.push({ title, url, image, genres, status, rating });
+            }
+        });
+
+        return results;
+    } catch (error) {
+        return { error: 'Gagal mengambil data, coba lagi nanti' };
+    }
+}
+
 module.exports = { 
   laheluSearch,
   ttstalk,
@@ -462,5 +528,7 @@ module.exports = {
   pin,
   ffStalk,
   createPayment,
-  cekStatus
+  cekStatus,
+  mod,
+  anime
 }

@@ -54,6 +54,46 @@ app.get('/api/lahelu', async (req, res) => {
   }
 });
 
+app.get('/api/modcombo', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { mod } = require('./scrape')
+    const response = await mod(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/anime', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { anime } = require('./scrape')
+    const response = await anime(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
 app.get('/api/githubSearch', async (req, res) => {
   const { q } = req.query;
 
@@ -165,7 +205,7 @@ app.get('/api/viooai', async (req, res) => {
   }
 });
 
-app.get('/api/orkut/createPayment', async (req, res) => {
+app.get('/api/orkut/createpayment', async (req, res) => {
   const { amount, codeqr } = req.query;
 
   if (!amount) {
@@ -178,6 +218,29 @@ app.get('/api/orkut/createPayment', async (req, res) => {
   try {
     const { createPayment } = require('./scrape')
     const response = await createPayment(amount, codeqr);    
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response.result
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/orkut/cekstatus', async (req, res) => {
+  const { merchant, keyorkut } = req.query;
+
+  if (!merchant) {
+    return res.status(400).json({ status: false, error: "Tolong masukkan merchant" });
+  }
+  if (!keyorkut) {
+    return res.status(400).json({ status: false, error: "Tolong masukkan keyorkut" });
+  }
+
+  try {
+    const { cekStatus } = require('./scrape')
+    const response = await cekStatus(merchant, keyorkut);    
     res.status(200).json({
       status: true,
       creator: 'ikann',
