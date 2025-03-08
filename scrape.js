@@ -480,7 +480,7 @@ async function mod(query) {
       }
     });
 
-    console.log(hasil.length ? hasil : 'Tidak ditemukan hasil.');
+    return hasil
   } catch (e) {
     console.error('Error:', e.message);
   }
