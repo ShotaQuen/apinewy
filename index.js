@@ -353,7 +353,7 @@ app.get('/api/islam/surah', async (req, res) => {
 });
 
 app.get('/api/islam/nosurat', async (req, res) => {
-    const { nosurat } = req.params;
+    const { nosurat } = req.query
     if (nosurat >= 115) {
         return res.status(404).json({
             status: false,
@@ -380,7 +380,7 @@ app.get('/api/islam/nosurat', async (req, res) => {
 
 app.get('/api/islam/namasurat', async (req, res) => {
     try {
-        const { namasurat } = req.params;
+        const { namasurat } = req.query
         const listSurat = await axios.get('https://api.npoint.io/99c279bb173a6e28359c/data');
         const findSurah = listSurat.data.find(surah => surah.nama === namasurat);
 
