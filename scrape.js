@@ -520,6 +520,277 @@ async function anime(query) {
     }
 }
 
+async function mediafire(url) {
+  try {
+    const { data: text } = await axios.get('https://r.jina.ai/' + url)
+
+    const result = {
+      title: (text.match(/Title: (.+)/) || [])[1]?.trim() || '',
+      filename: '',
+      extension: '',
+      size: '',
+      download: '',
+      repair: '',
+      url: (text.match(/URL Source: (.+)/) || [])[1]?.trim() || ''
+    }
+
+    const matches = [...text.matchAll(/\[(.*?)\]\((https:\/\/[^\s]+)\)/g)]
+    for (const match of matches) {
+      const desc = match[1].trim()
+      const link = match[2].trim()
+      
+      if (desc.toLowerCase().includes('download') && desc.match(/\((\d+(\.\d+)?[KMGT]B)\)/)) {
+        result.url = link
+        result.size = (desc.match(/\((\d+(\.\d+)?[KMG]?B)\)/) || [])[1] || ''
+      }
+      if (desc.toLowerCase().includes('repair')) {
+        result.repair = link
+      }
+    }
+
+    if (result.url) {
+      const decodedUrl = decodeURIComponent(result.url)
+      const fileMatch = decodedUrl.match(/\/([^\/]+\.[a-zA-Z0-9]+)(?:\?|$)/)
+      if (fileMatch) {
+        result.filename = fileMatch[1]
+        result.extension = result.filename.split('.').pop().toLowerCase()
+      }
+    }
+
+    return result
+  } catch (err) {
+    throw Error(err.message)
+  }
+}
+
+async function ytdl(url, type, quality) {
+  const api = {
+    base: 'https://media.savetube.me/api',
+    cdn: '/random-cdn',
+    info: '/v2/info',
+    download: '/download'
+  }
+
+  const headers = {
+    accept: '*/*',
+    'content-type': 'application/json',
+    origin: 'https://yt.savetube.me',
+    referer: 'https://yt.savetube.me/',
+    'user-agent': 'Postify/1.0.0'
+  }
+
+  const vid_quality = ['144', '240', '360', '480', '720', '1080']
+  const aud_quality = ['32', '64', '128', '192', '256', '320']
+
+  const hex_to_buf = (hex) => Buffer.from(hex, 'hex')
+
+  const decrypt = (enc) => {
+    try {
+      const secret_key = 'C5D58EF67A7584E4A29F6C35BBC4EB12'
+      const data = Buffer.from(enc, 'base64')
+      const iv = data.slice(0, 16)
+      const content = data.slice(16)
+      const key = hex_to_buf(secret_key)
+
+      const decipher = createDecipheriv('aes-128-cbc', key, iv)
+      let decrypted = Buffer.concat([decipher.update(content), decipher.final()])
+
+      return JSON.parse(decrypted.toString())
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
+  const get_id = (url) => {
+    const regex = [
+      /youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+      /youtu\.be\/([a-zA-Z0-9_-]{11})/
+    ]
+    for (let r of regex) {
+      let match = url.match(r)
+      if (match) return match[1]
+    }
+    return null
+  }
+
+  const dl_file = (url, file_path) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await axios({
+          url,
+          method: 'GET',
+          responseType: 'stream'
+        })
+        const writer = fs.createWriteStream(file_path)
+        response.data.pipe(writer)
+        writer.on('finish', () => resolve(file_path))
+        writer.on('error', reject)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
+  const convert_audio = (input, output, bitrate) => {
+    return new Promise((resolve, reject) => {
+      const process = spawn('ffmpeg', [
+        '-i', 'pipe:0',
+        '-b:a', `${bitrate}k`,
+        '-preset', 'ultrafast',
+        '-movflags', '+faststart',
+        output
+      ])
+    
+      const readStream = fs.createReadStream(input)
+      readStream.pipe(process.stdin)
+
+      process.on('close', (code) => {
+        if (code === 0) resolve(output)
+        else reject(new Error('Error :('))
+      })
+    })
+  }
+
+  const id = get_id(url)
+
+  try {
+    const { data: cdn_res } = await axios.get(api.base+api.cdn, { headers })
+    const cdn = cdn_res.cdn
+
+    const { data: info_res } = await axios.post(`https://${cdn}${api.info}`, {
+      url: `https://www.youtube.com/watch?v=${id}`
+    }, { headers })
+
+    const decrypted = decrypt(info_res.data)
+
+    if (type === 'mp4') {
+      if (!vid_quality.includes(quality.toString())) quality = '360'
+    } else if (type === 'mp3') {
+      if (!aud_quality.includes(quality.toString())) quality = '192'
+    }
+
+    const { data: dl_res } = await axios.post(`https://${cdn}${api.download}`, {
+      id,
+      downloadType: type === 'mp3' ? 'audio' : 'video',
+      quality,
+      key: decrypted.key
+    }, { headers })
+
+    const file_name = `${randomKarakter(4)}.${type}`
+    const file_path = './' + file_name
+
+    await dl_file(dl_res.data.downloadUrl, file_path)
+
+    if (type === 'mp3') {
+      const output_file = `./${randomKarakter(4)}.mp3`
+      await convert_audio(file_path, output_file, quality)
+      fs.unlinkSync(file_path)
+      return {
+        title: decrypted.title,
+        format: 'mp3',
+        quality: quality+'kbps',
+        duration: decrypted.duration,
+        thumbnail: decrypted.thumbnail || `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+        file_name: decrypted.title+'.mp3',
+        file_size: FileSize(output_file),
+        download: output_file
+      }
+    }
+
+    return {
+      title: decrypted.title,
+      format: 'mp4',
+      quality: quality+'p',
+      duration: decrypted.duration,
+      thumbnail: decrypted.thumbnail || `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+      file_name: decrypted.title+'.mp4',
+      file_size: FileSize(file_path),
+      download: file_path
+    }
+  } catch (err) {
+    return { error: err.message }
+  }
+}
+
+const Apk4Free = {
+    async search(q) {
+       const { data } = await axios.get('https://apk4free.net/?s='+q);
+       const $ = cheerio.load(data);
+       const res = [];
+       $('.baps > .bav').each((i, e)=>{
+           let obj = {};
+           obj.title = $(e).find('span.title').text().trim();
+           obj.link = $(e).find('a').attr('href');
+           obj.developer = $(e).find('span.developer').text().trim();
+           obj.version = $(e).find('span.version').text().trim();
+           obj.image = $(e).find('img').attr('src').replace('150x150', '300x300');
+           obj.rating = parseInt($(e).find('span.stars').attr('style').replace(/\D/g, ''))/20;
+           res.push(obj);
+       });
+       
+       return res;
+    },
+    async detail(url) {
+       const { data } = await axios.get(url);
+       const $ = cheerio.load(data);
+       const _ = $('div.app-s');
+       _.find('div#ez-toc-container').remove();
+       const res = {
+           title: _.find('h1.main-box-title').text().trim(),
+           version: _.find('div.version').text().trim(),
+           genre: _.find('ul.post-categories').text().trim(),
+           icon: _.find('div.image-single').attr('style').match(/\((.*?)\)/)[1].replace('150x150', '300x300'),
+           download: _.find('a.downloadAPK').attr('href'),
+           rating: _.find('span.rating-average > b').text().trim(),
+           votes: _.find('span.rating-text > span').text().trim(),
+           developer: _.find('div.app-icb > div.da-s:eq(0)').text().replace('Developer', '').trim(),
+           devlink: _.find('div.app-icb > div.da-s:eq(0) > a').attr('href'),
+           requirements: _.find('div.app-icb > div.da-s:eq(2)').text().replace('Requirements', '').trim(),
+           downloads: _.find('div.app-icb > div.da-s:eq(3)').text().replace('Downloads', '').trim(),
+           playstore: _.find('div.app-icb > div.da-s:eq(4) > a').attr('href'),
+           description: _.find('div.descripcion').text().trim(),
+           details: _.find('div#descripcion').text().trim().replace(/^Description|Screenshots$/g, '').replace(/\n+/g, '\n').trim(),
+           whatsnew: _.find('div#novedades > div.box-content').text().trim(),
+           video: _.find('div.iframeBoxVideo > iframe').attr('src'),
+           images: [],
+           related: []
+       };
+       
+       _.find('div#slideimages img').each((i, e)=>{
+           res.images.push($(e).attr('src'));
+       });
+       
+       _.find('.baps > .bav').each((i, e)=>{
+           let obj = {};
+           obj.title = $(e).find('span.title').text().trim();
+           obj.link = $(e).find('a').attr('href');
+           obj.developer = $(e).find('span.developer').text().trim();
+           obj.version = $(e).find('span.version').text().trim();
+           obj.image = $(e).find('img').attr('src').replace('150x150', '300x300');
+           obj.rating = parseInt($(e).find('span.stars').attr('style').replace(/\D/g, ''))/20;
+           res.related.push(obj);
+       });
+       
+       return res;
+    },
+    async download(url) {
+       const { data } = await axios.get(/(download\/?)$/.test(url)?url:url.replace(/\/$/, '')+'/download');
+       const $ = cheerio.load(data);
+       let obj = {};
+       obj.title = $('div.pxtd > h3').text().trim();
+       obj.package = $('div.pxtd > table tr:eq(0) td:eq(1)').text().trim();
+       obj.version = $('div.pxtd > table tr:eq(1) td:eq(1)').text().trim();
+       obj.size = $('div.pxtd > table tr:eq(2) td:eq(1)').text().trim();
+       obj.requirements = $('div.pxtd > table tr:eq(3) td:eq(1)').text().trim();
+       obj.url = $('div.pxtd #list-downloadlinks > li:eq(1) > a').attr('href');
+       
+       return obj;
+    },
+};
+
 module.exports = { 
   laheluSearch,
   ttstalk,
@@ -531,5 +802,8 @@ module.exports = {
   createPayment,
   cekStatus,
   mod,
-  anime
+  anime,
+  mediafire,
+  ytdl,
+  Apk4Free
 }

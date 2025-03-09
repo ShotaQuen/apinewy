@@ -113,6 +113,26 @@ app.get('/api/githubSearch', async (req, res) => {
   }
 });
 
+app.get('/api/Apk4Free', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { Apk4Free } = require('./scrape')
+    const response = await Apk4Free(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
 app.get('/api/pin', async (req, res) => {
   const { q } = req.query;
   if (!q) {
@@ -186,6 +206,24 @@ app.get('/api/ffStalk', async (req, res) => {
   }
 });
 
+app.get('/api/mediafile', async (req, res) => {
+  const { q } = req.query;
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+  try {
+    const { mediafire } = require('./scrape')
+    const response = await mediafire.stalk(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
 app.get('/api/viooai', async (req, res) => {
   const { q } = req.query;
 
@@ -196,6 +234,51 @@ app.get('/api/viooai', async (req, res) => {
   try {
     const { viooai } = require('./scrape')
     const response = await viooai(q);    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/ytmp4', async (req, res) => {
+  const { url, quality } = req.query;
+
+  if (!url) {
+    return res.status(400).json({ status: false, error: "Tolong masukkan url YouTube" });
+  }
+  if (!quality) {
+    return res.status(400).json({ status: false, error: "Tolong masukkan url quality" });
+  }
+
+  try {
+    const { ytdl } = require('./scrape')
+    const response = await ytdl(url, ytmp4, quality);    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/ytmp3', async (req, res) => {
+  const { url, quality } = req.query;
+
+  if (!url) {
+    return res.status(400).json({ status: false, error: "Tolong masukkan url YouTube" });
+  }
+  if (!quality) {
+    return res.status(400).json({ status: false, error: "Tolong masukkan url quality" });
+  }
+
+  try {
+    const { ytdl } = require('./scrape')
+    const response = await ytdl(url, ytmp3, quality);
+    res.status(200).json({
       status: true,
       creator: 'ikann',
       data: response
@@ -249,6 +332,78 @@ app.get('/api/orkut/cekstatus', async (req, res) => {
   } catch (error) {
     res.status(500).json({ status: false, error: error.message });
   }
+});
+
+app.get('/api/islam/surah', async (req, res) => {
+    try {
+        const listSurat = await axios.get('https://api.npoint.io/99c279bb173a6e28359c/data');
+
+        res.status(200).json({
+            status: true,
+            creator: 'ikann',
+            data: listSurat.data
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            creator: 'ikann',
+            message: "Server sedang error :("
+        });
+    }
+});
+
+app.get('/api/islam/nosurat', async (req, res) => {
+    const { surat } = req.params;
+    if (surat >= 115) {
+        return res.status(404).json({
+            status: false,
+            creator: 'ikann',
+            message: "Al-Qur'an hanya sampai 114 surah"
+        });
+    }
+
+    try {
+        const surat = await axios.get(`https://api.npoint.io/99c279bb173a6e28359c/surat/${surat}`);
+        res.status(200).json({
+            status: true,
+            creator: 'ikann',
+            data: surat.data
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            creator: 'ikann',
+            message: "Server sedang error :("
+        });
+    }
+});
+
+app.get('/api/islam/namasurat', async (req, res) => {
+    try {
+        const { surat } = req.params;
+        const listSurat = await axios.get('https://api.npoint.io/99c279bb173a6e28359c/data');
+        const findSurah = listSurat.data.find(surah => surah.nama === surat);
+
+        if (!findSurah) {
+            return res.status(404).json({
+                status: false,
+                creator: 'ikann',
+                message: "Surah tidak ditemukan"
+            });
+        }
+
+        res.status(200).json({
+            status: true,
+            creator: 'ikann',
+            data: findSurah
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            creator: 'ikann',
+            message: "Server sedang error :("
+        });
+    }
 });
 
 app.use((req, res, next) => {
