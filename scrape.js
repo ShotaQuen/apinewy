@@ -19,6 +19,24 @@ const FileSize = (path) => {
   return bytes + ' B'
 }
 
+async function CatBox(path) {
+  const data = new FormData()
+  data.append('reqtype', 'fileupload')
+  data.append('userhash', '')
+  data.append('fileToUpload', fs.createReadStream(path))
+  const config = {
+    method: 'POST',
+    url: 'https://catbox.moe/user/api.php',
+    headers: {
+      ...data.getHeaders(),
+      'User-Agent': 'Mozilla/5.0 (Android 10; Mobile; rv:131.0) Gecko/131.0 Firefox/131.0',
+    },
+    data: data
+  }
+  const api = await axios.request(config)
+  return api.data
+}
+
 async function laheluSearch(query) {
   let { data } = await axios.get(`https://lahelu.com/api/post/get-search?query=${query}&cursor=cursor`)
   return data.postInfos
@@ -592,25 +610,25 @@ async function ytdl(url, type, quality) {
     'user-agent': 'Postify/1.0.0'
   }
 
-  const vid_quality = ['144', '240', '360', '480', '720', '1080']
-  const aud_quality = ['32', '64', '128', '192', '256', '320']
+  const vid_quality = ['144', '240', '360', '480', '720', '1080'];
+  const aud_quality = ['32', '64', '128', '192', '256', '320'];
 
-  const hex_to_buf = (hex) => Buffer.from(hex, 'hex')
+  const hex_to_buf = (hex) => Buffer.from(hex, 'hex');
 
   const decrypt = (enc) => {
     try {
-      const secret_key = 'C5D58EF67A7584E4A29F6C35BBC4EB12'
-      const data = Buffer.from(enc, 'base64')
-      const iv = data.slice(0, 16)
-      const content = data.slice(16)
-      const key = hex_to_buf(secret_key)
+      const secret_key = 'C5D58EF67A7584E4A29F6C35BBC4EB12';
+      const data = Buffer.from(enc, 'base64');
+      const iv = data.slice(0, 16);
+      const content = data.slice(16);
+      const key = hex_to_buf(secret_key);
 
-      const decipher = createDecipheriv('aes-128-cbc', key, iv)
-      let decrypted = Buffer.concat([decipher.update(content), decipher.final()])
+      const decipher = createDecipheriv('aes-128-cbc', key, iv);
+      let decrypted = Buffer.concat([decipher.update(content), decipher.final()]);
 
-      return JSON.parse(decrypted.toString())
+      return JSON.parse(decrypted.toString());
     } catch (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   }
 
@@ -621,110 +639,47 @@ async function ytdl(url, type, quality) {
       /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/,
       /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
       /youtu\.be\/([a-zA-Z0-9_-]{11})/
-    ]
+    ];
     for (let r of regex) {
-      let match = url.match(r)
-      if (match) return match[1]
+      let match = url.match(r);
+      if (match) return match[1];
     }
-    return null
+    return null;
   }
 
-  const dl_file = (url, file_path) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await axios({
-          url,
-          method: 'GET',
-          responseType: 'stream'
-        })
-        const writer = fs.createWriteStream(file_path)
-        response.data.pipe(writer)
-        writer.on('finish', () => resolve(file_path))
-        writer.on('error', reject)
-      } catch (error) {
-        reject(error)
-      }
-    })
-  }
-
-  const convert_audio = (input, output, bitrate) => {
-    return new Promise((resolve, reject) => {
-      const process = spawn('ffmpeg', [
-        '-i', 'pipe:0',
-        '-b:a', `${bitrate}k`,
-        '-preset', 'ultrafast',
-        '-movflags', '+faststart',
-        output
-      ])
-    
-      const readStream = fs.createReadStream(input)
-      readStream.pipe(process.stdin)
-
-      process.on('close', (code) => {
-        if (code === 0) resolve(output)
-        else reject(new Error('Error :('))
-      })
-    })
-  }
-
-  const id = get_id(url)
+  const id = get_id(url);
+  if (!id) return { error: 'Invalid YouTube URL' };
 
   try {
-    const { data: cdn_res } = await axios.get(api.base+api.cdn, { headers })
-    const cdn = cdn_res.cdn
+    const { data: cdn_res } = await axios.get(api.base + api.cdn, { headers });
+    const cdn = cdn_res.cdn;
 
     const { data: info_res } = await axios.post(`https://${cdn}${api.info}`, {
       url: `https://www.youtube.com/watch?v=${id}`
-    }, { headers })
+    }, { headers });
 
-    const decrypted = decrypt(info_res.data)
+    const decrypted = decrypt(info_res.data);
 
-    if (type === 'mp4') {
-      if (!vid_quality.includes(quality.toString())) quality = '360'
-    } else if (type === 'mp3') {
-      if (!aud_quality.includes(quality.toString())) quality = '192'
-    }
+    if (type === 'mp4' && !vid_quality.includes(quality.toString())) quality = '360';
+    if (type === 'mp3' && !aud_quality.includes(quality.toString())) quality = '192';
 
     const { data: dl_res } = await axios.post(`https://${cdn}${api.download}`, {
       id,
       downloadType: type === 'mp3' ? 'audio' : 'video',
       quality,
       key: decrypted.key
-    }, { headers })
-
-    const file_name = `${randomKarakter(4)}.${type}`
-    const file_path = './' + file_name
-
-    await dl_file(dl_res.data.downloadUrl, file_path)
-
-    if (type === 'mp3') {
-      const output_file = `./${randomKarakter(4)}.mp3`
-      await convert_audio(file_path, output_file, quality)
-      fs.unlinkSync(file_path)
-      return {
-        title: decrypted.title,
-        format: 'mp3',
-        quality: quality+'kbps',
-        duration: decrypted.duration,
-        thumbnail: decrypted.thumbnail || `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
-        file_name: decrypted.title+'.mp3',
-        file_size: FileSize(output_file),
-        download: output_file
-      }
-    }
+    }, { headers });
 
     return {
       title: decrypted.title,
-      format: 'mp4',
-      quality: quality+'p',
+      format: type,
+      quality: type === 'mp3' ? `${quality}kbps` : `${quality}p`,
       duration: decrypted.duration,
       thumbnail: decrypted.thumbnail || `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
-      file_name: decrypted.title+'.mp4',
-      file_size: FileSize(file_path),
-      download: file_path
-    }
+      download_url: dl_res.data.downloadUrl
+    };
   } catch (err) {
-    return { error: err.message }
+    return { error: err.message };
   }
 }
 
