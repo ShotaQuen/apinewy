@@ -255,7 +255,7 @@ app.get('/api/ytmp4', async (req, res) => {
 
   try {
     const { ytdl } = require('./scrape')
-    const response = await ytdl(url, mp4, quality);    res.status(200).json({
+    const response = await ytdl(url, 'mp4', quality);    res.status(200).json({
       status: true,
       creator: 'ikann',
       data: response
@@ -277,7 +277,7 @@ app.get('/api/ytmp3', async (req, res) => {
 
   try {
     const { ytdl } = require('./scrape')
-    const response = await ytdl(url, mp3, quality);
+    const response = await ytdl(url, 'mp3', quality);
     res.status(200).json({
       status: true,
       creator: 'ikann',
