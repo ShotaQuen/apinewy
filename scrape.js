@@ -6,6 +6,19 @@ const path = require('path')
 const { spawn } = require('child_process')
 const YTDL = require('@distube/ytdl-core')
 
+const randomKarakter = (length) => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  return Array.from({ length }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('')
+}
+
+const FileSize = (path) => {
+  const bytes = fs.statSync(path).size
+  if (bytes >= 1073741824) return (bytes / 1073741824).toFixed(2) + ' GB'
+  if (bytes >= 1048576) return (bytes / 1048576).toFixed(2) + ' MB'
+  if (bytes >= 1024) return (bytes / 1024).toFixed(2) + ' KB'
+  return bytes + ' B'
+}
+
 async function laheluSearch(query) {
   let { data } = await axios.get(`https://lahelu.com/api/post/get-search?query=${query}&cursor=cursor`)
   return data.postInfos
