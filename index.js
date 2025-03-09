@@ -54,6 +54,26 @@ app.get('/api/lahelu', async (req, res) => {
   }
 });
 
+app.get('/api/sfileSearch', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { sfileSearch } = require('./scrape')
+    const response = await sfileSearch(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
 app.get('/api/modcombo', async (req, res) => {
   const { q } = req.query;
 
@@ -74,6 +94,46 @@ app.get('/api/modcombo', async (req, res) => {
   }
 });
 
+app.get('/api/jadwalsholat', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { JadwalSholat } = require('./scrape')
+    const response = await JadwalSholat.byCity(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/happymod', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { happymod } = require('./scrape')
+    const response = await happymod(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
 app.get('/api/anime', async (req, res) => {
   const { q } = req.query;
 
@@ -84,6 +144,86 @@ app.get('/api/anime', async (req, res) => {
   try {
     const { anime } = require('./scrape')
     const response = await anime(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/autogempa', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { autogempa } = require('./scrape')
+    const response = await autogempa(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/gempaterkini', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { gempaterkini } = require('./scrape')
+    const response = await gempaterkini(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/gempadirasakan', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { gempadirasakan } = require('./scrape')
+    const response = await gempadirasakan(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/spotidown', async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+
+  try {
+    const { spotidown } = require('./scrape')
+    const response = await spotidown(q);
     res.status(200).json({
       status: true,
       creator: 'ikann',
@@ -214,6 +354,24 @@ app.get('/api/mediafile', async (req, res) => {
   try {
     const { mediafire } = require('./scrape')
     const response = await mediafire.stalk(q);
+    res.status(200).json({
+      status: true,
+      creator: 'ikann',
+      data: response
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, error: error.message });
+  }
+});
+
+app.get('/api/ssweb', async (req, res) => {
+  const { q } = req.query;
+  if (!q) {
+    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
+  }
+  try {
+    const { ssweb } = require('./scrape')
+    const response = await ssweb.stalk(q);
     res.status(200).json({
       status: true,
       creator: 'ikann',
