@@ -1506,7 +1506,6 @@ module.exports = {
   Apk4Free,
   sfileSearch,
   happymod,
-  spotidown,
   autogempa,
   gempaterkini,
   gempadirasakan,

@@ -155,15 +155,10 @@ app.get('/api/anime', async (req, res) => {
 });
 
 app.get('/api/autogempa', async (req, res) => {
-  const { q } = req.query;
-
-  if (!q) {
-    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
-  }
 
   try {
     const { autogempa } = require('./scrape')
-    const response = await autogempa(q);
+    const response = await autogempa
     res.status(200).json({
       status: true,
       creator: 'ikann',
@@ -175,15 +170,10 @@ app.get('/api/autogempa', async (req, res) => {
 });
 
 app.get('/api/gempaterkini', async (req, res) => {
-  const { q } = req.query;
-
-  if (!q) {
-    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
-  }
-
+  
   try {
     const { gempaterkini } = require('./scrape')
-    const response = await gempaterkini(q);
+    const response = await gempaterkini
     res.status(200).json({
       status: true,
       creator: 'ikann',
@@ -195,35 +185,10 @@ app.get('/api/gempaterkini', async (req, res) => {
 });
 
 app.get('/api/gempadirasakan', async (req, res) => {
-  const { q } = req.query;
-
-  if (!q) {
-    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
-  }
-
+  
   try {
     const { gempadirasakan } = require('./scrape')
-    const response = await gempadirasakan(q);
-    res.status(200).json({
-      status: true,
-      creator: 'ikann',
-      data: response
-    });
-  } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
-  }
-});
-
-app.get('/api/spotidown', async (req, res) => {
-  const { q } = req.query;
-
-  if (!q) {
-    return res.status(400).json({ status: false, error: "Query parameter 'q' is required" });
-  }
-
-  try {
-    const { spotidown } = require('./scrape')
-    const response = await spotidown(q);
+    const response = await gempadirasakan
     res.status(200).json({
       status: true,
       creator: 'ikann',
