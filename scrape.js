@@ -839,64 +839,32 @@ async function spotidown(url) {
     }
 }
 
-async function autogempa() {
-    const url = 'https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json';
-
+async function fetchGempaData(url) {
     try {
         const response = await axios.get(url);
         const data = response.data;
 
         if (data.Infogempa && data.Infogempa.gempa) {
-            const gempaList = data.Infogempa.gempa;
-
-            return gempaList
+            return data.Infogempa.gempa;
         } else {
-            console.log('Data gempa tidak ditemukan.');
+            return null;
         }
-
     } catch (error) {
-        console.error('Error fetching data:', error.message);
+        console.error("Error fetching data:", error.message);
+        return null;
     }
+}
+
+async function autogempa() {
+    return await fetchGempaData("https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json");
 }
 
 async function gempaterkini() {
-    const url = 'https://data.bmkg.go.id/DataMKG/TEWS/gempaterkini.json';
-
-    try {
-        const response = await axios.get(url);
-        const data = response.data;
-
-        if (data.Infogempa && data.Infogempa.gempa) {
-            const gempaList = data.Infogempa.gempa;
-
-            return gempaList
-        } else {
-            console.log('Data gempa tidak ditemukan.');
-        }
-
-    } catch (error) {
-        console.error('Error fetching data:', error.message);
-    }
+    return await fetchGempaData("https://data.bmkg.go.id/DataMKG/TEWS/gempaterkini.json");
 }
 
 async function gempadirasakan() {
-    const url = 'https://data.bmkg.go.id/DataMKG/TEWS/gempadirasakan.json';
-
-    try {
-        const response = await axios.get(url);
-        const data = response.data;
-
-        if (data.Infogempa && data.Infogempa.gempa) {
-            const gempaList = data.Infogempa.gempa;
-
-            return gempaList
-        } else {
-            console.log('Data gempa tidak ditemukan.');
-        }
-
-    } catch (error) {
-        console.error('Error fetching data:', error.message);
-    }
+    return await fetchGempaData("https://data.bmkg.go.id/DataMKG/TEWS/gempadirasakan.json");
 }
 
 const JadwalSholat = {

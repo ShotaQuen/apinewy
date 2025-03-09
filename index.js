@@ -3,6 +3,7 @@ const path = require('path');
 const os = require('os');
 const fs = require('fs');
 const axios = require('axios')
+const { autogempa, gempaterkini, gempadirasakan } = require("./scrape");
 
 var app = express();
 app.enable("trust proxy");
@@ -154,49 +155,31 @@ app.get('/api/anime', async (req, res) => {
   }
 });
 
-app.get('/api/autogempa', async (req, res) => {
-
-  try {
-    const { autogempa } = require('./scrape')
-    const response = await autogempa
-    res.status(200).json({
-      status: true,
-      creator: 'ikann',
-      data: response.data.Infogempa.gempa
-    });
-  } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
-  }
+app.get("/api/autogempa", async (req, res) => {
+    const data = await autogempa();
+    if (data) {
+        res.status(200).json({ status: true, creator: "ikann", data });
+    } else {
+        res.status(500).json({ status: false, error: "Gagal mengambil data gempa" });
+    }
 });
 
-app.get('/api/gempaterkini', async (req, res) => {
-  
-  try {
-    const { gempaterkini } = require('./scrape')
-    const response = await gempaterkini
-    res.status(200).json({
-      status: true,
-      creator: 'ikann',
-      data: response.data.Infogempa.gempa
-    });
-  } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
-  }
+app.get("/api/gempaterkini", async (req, res) => {
+    const data = await gempaterkini();
+    if (data) {
+        res.status(200).json({ status: true, creator: "ikann", data });
+    } else {
+        res.status(500).json({ status: false, error: "Gagal mengambil data gempa" });
+    }
 });
 
-app.get('/api/gempadirasakan', async (req, res) => {
-  
-  try {
-    const { gempadirasakan } = require('./scrape')
-    const response = await gempadirasakan
-    res.status(200).json({
-      status: true,
-      creator: 'ikann',
-      data: response.data.Infogempa.gempa
-    });
-  } catch (error) {
-    res.status(500).json({ status: false, error: error.message });
-  }
+app.get("/api/gempadirasakan", async (req, res) => {
+    const data = await gempadirasakan();
+    if (data) {
+        res.status(200).json({ status: true, creator: "ikann", data });
+    } else {
+        res.status(500).json({ status: false, error: "Gagal mengambil data gempa" });
+    }
 });
 
 app.get('/api/githubSearch', async (req, res) => {
