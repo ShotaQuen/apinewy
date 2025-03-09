@@ -319,7 +319,7 @@ app.get('/api/ssweb', async (req, res) => {
   }
   try {
     const { ssweb } = require('./scrape')
-    const response = await ssweb.stalk(q);
+    const response = await ssweb(q);
     res.status(200).json({
       status: true,
       creator: 'ikann',
