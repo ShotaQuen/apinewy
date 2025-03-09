@@ -162,7 +162,7 @@ app.get('/api/autogempa', async (req, res) => {
     res.status(200).json({
       status: true,
       creator: 'ikann',
-      data: response
+      data: response.data.Infogempa.gempa
     });
   } catch (error) {
     res.status(500).json({ status: false, error: error.message });
@@ -177,7 +177,7 @@ app.get('/api/gempaterkini', async (req, res) => {
     res.status(200).json({
       status: true,
       creator: 'ikann',
-      data: response
+      data: response.data.Infogempa.gempa
     });
   } catch (error) {
     res.status(500).json({ status: false, error: error.message });
@@ -192,7 +192,7 @@ app.get('/api/gempadirasakan', async (req, res) => {
     res.status(200).json({
       status: true,
       creator: 'ikann',
-      data: response
+      data: response.data.Infogempa.gempa
     });
   } catch (error) {
     res.status(500).json({ status: false, error: error.message });
