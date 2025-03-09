@@ -255,7 +255,7 @@ app.get('/api/ytmp4', async (req, res) => {
 
   try {
     const { ytdl } = require('./scrape')
-    const response = await ytdl(url, ytmp4, quality);    res.status(200).json({
+    const response = await ytdl(url, mp4, quality);    res.status(200).json({
       status: true,
       creator: 'ikann',
       data: response
@@ -277,7 +277,7 @@ app.get('/api/ytmp3', async (req, res) => {
 
   try {
     const { ytdl } = require('./scrape')
-    const response = await ytdl(url, ytmp3, quality);
+    const response = await ytdl(url, mp3, quality);
     res.status(200).json({
       status: true,
       creator: 'ikann',
@@ -353,8 +353,8 @@ app.get('/api/islam/surah', async (req, res) => {
 });
 
 app.get('/api/islam/nosurat', async (req, res) => {
-    const { nosurat } = req.query
-    if (nosurat >= 115) {
+    const { q } = req.query
+    if (q >= 115) {
         return res.status(404).json({
             status: false,
             creator: 'ikann',
@@ -363,7 +363,7 @@ app.get('/api/islam/nosurat', async (req, res) => {
     }
 
     try {
-        const surat = await axios.get(`https://api.npoint.io/99c279bb173a6e28359c/surat/${nosurat}`);
+        const surat = await axios.get(`https://api.npoint.io/99c279bb173a6e28359c/surat/${q}`);
         res.status(200).json({
             status: true,
             creator: 'ikann',
@@ -380,9 +380,9 @@ app.get('/api/islam/nosurat', async (req, res) => {
 
 app.get('/api/islam/namasurat', async (req, res) => {
     try {
-        const { namasurat } = req.query
+        const { q } = req.query
         const listSurat = await axios.get('https://api.npoint.io/99c279bb173a6e28359c/data');
-        const findSurah = listSurat.data.find(surah => surah.nama === namasurat);
+        const findSurah = listSurat.data.find(surah => surah.nama === q);
 
         if (!findSurah) {
             return res.status(404).json({
