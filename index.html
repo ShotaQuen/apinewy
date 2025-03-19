@@ -1,302 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Free Rest Api.">
-<meta name="author" content="Ikann">
-<meta property="og:image" content="https://files.catbox.moe/u6j0tk.jpg">
-<title>Api's Ikann</title>
+   <link rel="stylesheet" href="https://hisoka.net/css/bootstrap-icons.css" />
+   <link rel="stylesheet" href="https://hisoka.net/css/home/theme.css" />
 <script src="https://kit.fontawesome.com/5367cb78eb.js" crossorigin="anonymous"></script>
-<link rel="shortcut icon" href="https://files.catbox.moe/u6j0tk.jpg"/> 
-<link href="https://zeltoria.github.io/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://zeltoria.github.io/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="https://zeltoria.github.io/css/default.css" rel="stylesheet">
-<link href="https://zeltoria.github.io/css/style.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
-<style>
-* {
-font-family: "Share Tech Mono";
-}
-</style>
-
+   <style>
+      .icon-color {
+         width: 80px;
+         height: 80px;
+         border-radius: 50%;
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         margin-bottom: 24px;
+         font-size: 48px;
+         line-height: 0;
+         transition: all 0.4s ease-out 0s;
+         background-color: color-mix(in srgb, #1acc8d, transparent 95%);
+         color: #1acc8d;
+      }
+   </style>
 </head>
 
-<body id="page-top" class="dark-mode">
-<div id="wrapper">
- 
-<ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-<img src="https://files.catbox.moe/u6j0tk.jpg" class="rounded-circle shadow-4"style="width: 50px;" alt="Avatar" />
-<div class="sidebar-brand-text mx-3">ikann</div>
-</a>
-<hr class="sidebar-divider my-0">
-<li class="nav-item active">
-<a class="nav-link" href="#">
-<i class="fas fa-fw fa-thermometer-three-quarters"></i>
-<span>STATUS</span></a>
-</li>
-<hr class="sidebar-divider">
-<div class="sidebar-heading">
-Api
-</div>
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ai" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-robot"></i>
-<span>Ai</span>
-</a>
-<div id="ai" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="api/viooai?q=hello" target="_blank">ViooAi</a>
-</div>
-</div>
-</li>
+<body>
+   <!-- Google Tag Manager (noscript) -->
+   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5RWWX2Q5"
+         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+   <!-- End Google Tag Manager (noscript) -->
 
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#search" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-search"></i>
-<span>Search</span>
-</a>
-<div id="search" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="api/lahelu?q=anime" target="_blank">Lahelu</a>
-<a class="collapse-item" href="api/githubSearch?q=webapi" target="_blank">Github Search</a>
-<a class="collapse-item" href="api/pin?q=ikann" target="_blank">Pinterest</a>
-<a class="collapse-item" href="api/modcombo?q=minecraft" target="_blank">Mod Combo</a>
-<a class="collapse-item" href="api/happymod?q=minecraft" target="_blank">Happymod</a>
-<a class="collapse-item" href="api/Apk4Free?q=minecraft" target="_blank">Apk4Free</a>
-<a class="collapse-item" href="api/anime?q=naruto" target="_blank">Otaku Desu</a>
-<a class="collapse-item" href="api/sfileSearch?q=pixellab" target="_blank">Sfile Search</a>
-<a class="collapse-item" href="api/jadwalsholat?q=Pekalongan" target="_blank">Jadwal Sholat</a>
-</div>
-</div>
-</li>
+   <!--Main Content-->
+   <main class="main" id="top">
+      <section class="py-3" id="home">
+         <!--/.bg-holder-->
 
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#stalk" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-star"></i>
-<span>Stalk</span>
-</a>
-<div id="stalk" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="api/ttstalk?q=ikanngeming" target="_blank">Tiktok Stalk</a>
-<a class="collapse-item" href="api/npmStalk?q=ikanngeming" target="_blank">Npm Stalk</a>
-<a class="collapse-item" href="api/ffStalk?q=12345678" target="_blank">FF Stalk</a>
-</div>
-</div>
-</div>
-</li>
+         <div class="container position-relative">
+            <div class="row align-items-center py-8">
+               <div class="col-md-7 col-lg-6 text-center text-md-start">
+                  <h1 class="mb-4 display-3 fw-bold lh-sm">IkannNew Api</h1>
+                  <p class="mt-3 mb-4 fs-1">
+                     IkannNew is an API service designed to simplify integration and automation. With IkannNew, you can develop flexible and functional applications as needed, both for.
+                  </p>
+                  <a class="btn btn-lg btn-primary rounded-pill hover-top" href="a.html" role="button">Goo!!</a>
+               </div>
+            </div>
+         </div>
+      </section>
 
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bmkg" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-house-crack"></i>
-<span>Bmkg</span>
-</a>
-<div id="bmkg" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="api/autogempa" target="_blank">Auto Gempa</a>
-<a class="collapse-item" href="api/gempaterkini" target="_blank">Gempa Terkini</a>
-<a class="collapse-item" href="api/gempadirasakan" target="_blank">Gempa Dirasakan</a>
-</div>
-</div>
-</div>
-</li>
+      <section class="py-6" id="features">
+         <div class="container-lg">
+            <div class="row align-items-center">
+               <div class="col-md-7 col-lg-6 px-sm-5 px-md-0">
+                  <h1 class="fw-bold fs-4 display-3 lh-sm">Fire Features</h1>
+                  <p class="my-4">IkannNew is a 100% free fire and always has interesting updates.</p>
+                  <div class="d-flex align-items-center mb-5">
+                     <div>
+                        <i class="fa fa-bolt icon-color"></i>
+                     </div>
+                     <div class="px-4">
+                        <span class="fw-bold text-danger">FastAPI</span>
+                        <p>The FastAPI REST API is designed to efficiently process requests and ensure that the response is delivered within 60 seconds or less, providing a fast and reliable data transmission experience.</p>
+                     </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-5">
+                     <div>
+                        <i class="fa fa-code icon-color"></i>
+                     </div>
+                     <div class="px-4">
+                        <span class="fw-bold text-primary">Results</span>
+                        <p>JSON results are highly versatile and easy to use in JavaScript code, as well as in various other programming languages, making data exchange between systems simple and efficient.</p>
+                     </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-5">
+                     <div>
+                        <i class="fa fa-clock icon-color"></i>
+                     </div>
+                     <div class="px-4">
+                        <span class="fw-bold text-success">Run</span>
+                        <p>The API is designed to run 24/7, ensuring continuous availability and reliable performance, allowing seamless data access at any time without interruptions.</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!--<section> close ============================-->
+   </main>
+   <!--End of Main Content-->
 
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#download" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-download"></i>
-<span>Downloader</span>
-</a>
-<div id="download" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="api/mediafire?q=https://www.mediafire.com/file/717lb2o73wi7gga/Simple_Botz_V6_Ori%252C_Dapat_Dari_Skyzo.zip/file" target="_blank">Media Fire</a>
-<a class="collapse-item" href="api/ytmp4?url=https://youtu.be/VSmQGxN9kw8?si=WJIMuCiPtjRRsHuV&quality=480" target="_blank">Ytmp4</a>
-<a class="collapse-item" href="api/ytmp3?url=https://youtu.be/VSmQGxN9kw8?si=WJIMuCiPtjRRsHuV&quality=192" target="_blank">Ytmp3</a>
-</div>
-</div>
-</div>
-</li>
-
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tools" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-tools"></i>
-<span>Tools</span>
-</a>
-<div id="tools" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="api/ssweb?q=https://ikannnew.vercel.app" target="_blank">Ssweb</a>
-</div>
-</div>
-</div>
-</li>
-
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#orkut" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-money"></i>
-<span>Orkut</span>
-</a>
-<div id="orkut" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="/api/orkut/createpayment?amount=&codeqr=" target="_blank">Create Payment</a>
-<a class="collapse-item" href="/api/orkut/cekstatus?merchant=&keyorkut=" target="_blank">Cek Status</a>
-</div>
-</div>
-</div>
-</li>
-
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Islam" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-kaaba"></i>
-<span>Islam</span>
-</a>
-<div id="Islam" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="/api/islam/surah" target="_blank">Surat</a>
-<a class="collapse-item" href="/api/islam/nosurat?q=1" target="_blank">Nomor Surat</a>
-<a class="collapse-item" href="/api/islam/namasurat?q=Al Fatihah" target="_blank">Nama Surat</a>
-</div>
-</div>
-</div>
-</li>
-<hr class="sidebar-divider">
-</ul>
- 
-<div id="content-wrapper" class="d-flex flex-column">
-<div id="content">
-
-<nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-<button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
-<i class="fa fa-bars"></i>
-</button>
-<ul class="navbar-nav ml-auto">
-<li class="nav-item dropdown no-arrow">
-<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<img src="https://files.catbox.moe/u6j0tk.jpg" class="rounded-circle shadow-4"style="width: 50px;" alt="Avatar" />
-<span class="ml-2 d-none d-lg-inline small font-weight-bold"></span>
-</a>
-</li>
-</ul>
-</nav>
-
-<div class="container-fluid" id="container-wrapper">
-<div class="card h-50 mb-4">
-<div class="card-body">
-<div class="row align-items-center">
-<div class="col mr-2">
-<div class="text-md-left font-weight-bold mb-2 text-primary">ApiNew</div>
-<div class="text-sm-left mb-0 font-weight-bold">By ikann and friend
-</div>
-</div>
-<div class="col-auto">
-<i class="fas fa-quote-right fa-2x text-primary"></i>
-</div>
-</div>
-</div>
-</div>
-
-<div class="row mb-3">
-
-<div class="col-xl-3 col-md-6 mb-4">
-<div class="card h-50">
-<div class="card-body">
-<div class="row no-gutters align-items-center">
-<div class="col mr-2">
-<div class="text-xs font-weight-bold text-uppercase mb-1">Post</div>
-<span id="getawayCont" class="h5 mb-0 font-weight-bold">0 </span>
-</div>
-<div class="col-auto">
-<i class="fa fa-fire" ></i>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="col-xl-3 col-md-6 mb-4">
-<div class="card h-50">
-<div class="card-body">
-<div class="row no-gutters align-items-center">
-<div class="col mr-2">
-<div class="text-xs font-weight-bold text-uppercase mb-1">Battery</div>
-<span id="battery_level" class="h5 mb-0 font-weight-bold">Loading... </span>
-</div>
-<div class="col-auto">
-<i class="fa fa-battery-full" ></i>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="col-xl-3 col-md-6 mb-4">
-<div class="card h-50">
-<div class="card-body">
-<div class="row no-gutters align-items-center">
-<div class="col mr-2">
-<div class="text-xs font-weight-bold text-uppercase mb-1">Time</div>
-<div class="h5 mb-0 font-weight-bold" id="row-no-guttersalign-items-center">Loading...</div>
-<div class="h5 mb-0 font-weight-bold" id="text-xsfont-weight-boldtext-uppercase-mb-1"></div>
-</div>
-<div class="col-auto">
-<i class="fas fa-calendar fa-2x text-primary"></i>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="row">
-<div class="col-lg-12 text-center">
-Contact Me
-<p>
-
-<a href="https://wa.me/6285765183832" class="btn btn-primary btn-sm ml-2" target="_blank"><i class="fa-brands fa-whatsapp"></i>&nbsp;Whatsapp</a>
-</p>
-</div>
-</div>
-</div>
-
-</div>
- 
-<footer class="sticky-footer">
-<div class="container my-auto">
-<div class="copyright text-center my-auto">
-Made by
-<a href="#" target="_blank" style="color: rgb(224, 32, 7);">ikann</a>
-</span>
-</div>
-</div>
-</footer>
- 
-</div>
-</div>
-
-
-<a class="scroll-to-top rounded" href="#page-top">
-<i class="fas fa-angle-up"></i>
-</a>
-
-
-<script src="https://zeltoria.github.io/vendor/jquery/jquery.min.js"></script>
-<script src="https://zeltoria.github.io/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="https://zeltoria.github.io/vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="https://zeltoria.github.io/js/ruang-admin.min.js"></script>
-<script src="https://zeltoria.github.io/js/menu.js"></script>
-<script>
-const countCollapseItem = document.querySelectorAll('.collapse-item').length;
-
-document.getElementById('getawayCont').textContent = `${countCollapseItem}`;
-</script>
-
+   <!--JavaScripts-->
+   <script data-cfasync="false" src="https://hisoka.net/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/js/home.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/is_js/0.9.0/is.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-polyfills/0.1.43/polyfill.min.js"></script>
 </body>
 
 </html>
