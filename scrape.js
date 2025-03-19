@@ -1457,17 +1457,6 @@ async function ssweb(link) {
    return data
 }
 
-async function toBase64(text) {
-  const base64String = Buffer.from(text).toString('base64');
-
-  return base64String;
-}
-
-function toGhRaw(url) {
-  const rawUrl = url.replace('github.com', 'raw.githubusercontent.com').replace('/blob', '');
-  return rawUrl;
-}
-
 module.exports = { 
   laheluSearch,
   ttstalk,
@@ -1489,7 +1478,5 @@ module.exports = {
   gempaterkini,
   gempadirasakan,
   JadwalSholat,
-  ssweb,
-  toBase64,
-  toGhRaw
+  ssweb
 }
