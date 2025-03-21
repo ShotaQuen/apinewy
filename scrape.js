@@ -4,6 +4,7 @@ const { createDecipheriv } = require('crypto')
 const fs = require('fs')
 const path = require('path')
 const { spawn } = require('child_process')
+const FormData = require('form-data');
 const YTDL = require('@distube/ytdl-core')
 
 const randomKarakter = (length) => {
@@ -1457,6 +1458,87 @@ async function ssweb(link) {
    return data
 }
 
+async function tinyurl(url) {
+    let data = JSON.stringify({
+        "url": url,
+        "domain": "tinyurl.com"
+    });
+
+    const res = await axios.post('https://api.tinyurl.com/create?api_token=jvnZM70elj8JJLWQBBP3cjMwG99jph4xymzyzurjlsixYA8QqQqF9quZvRhT', data, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Cookie': 'XSRF-TOKEN=eyJpdiI6IlZZS0JGK3NFNFFhZVY2V1NkSWNCMkE9PSIsInZhbHVlIjoiY0t0eVdpaGhuTVcwaVdPalFqSjlGam10THlsa0JadTJ3Wno2cGs1SmRWQTl5bmxlYmxBaU5zc2tCMEZ6R2E1am5NdnRRL0czNTZ2YUtpaXBhSzJpakV5bmxHU3Q2SjV2aTVNMG8zRU10UjNwS2NPTUFuTkYwYXAzOGpXRjRzamwiLCJtYWMiOiJjNGUyMWRlYTVlNGU4OTlmYWFjYWEwYzIyZmQ3MzU5NjY4YTFmMzkyNTdlOTI3OWU1MTUzZDhhMGI5MWYyYjVlIiwidGFnIjoiIn0%3D; tinyurl_session=eyJpdiI6ImJsZVYvYzd2SWhxdnM5K3V5TmRzMUE9PSIsInZhbHVlIjoidkIzMUhrQlNrcG1LZVJzWlJ5MzF2RTZ1ekxWRndwdEcybVhjMTZQR0h3d3BJYWFTb3AzVHlTNW5YaXNicGdsZG1GYWd0aWdnQ01FOTBQUUhtVjlCZFRjaVh5TVBtVWxLTTZ4Q3U4dDhOVjgzdWI3RDZnUVErb2FLMS81YnpncEoiLCJtYWMiOiJhMzZlYjkyM2Q0OWMyZTc1NDc2OWYxNjUwYWJhMWNhYzE5NjBlNGFlMDJiZjc3NGZlZGUyOWZjOWVkZjM2NGQ5IiwidGFnIjoiIn0%3D; __cf_bm=TioWwSmmrBbyealUDYdksJf3jLYCPHZWdbZChYj.pN8-1742475180-1.0.1.1-9v8G0t3oJ3RUTgL7KutU3y4XTCOBa_2kDn6h33pBlh5MII31P2YjuvE5nKzrULHwaxSQ.bW8OWHxeqZSk4zDNcWbZBGUQAkzfovo39_X1WU'
+        },
+    });
+
+    return res.data.data
+}
+
+const bes = 'https://komiku.id';
+const bep = "https://api.komiku.id"
+
+const Komiku = {
+    async search(q){
+        const { data } = await axios.get(bep+'/?post_type=manga&s='+encodeURIComponent(q));
+        const $ = cheerio.load(data);
+        const result = [];
+        
+        $('.bge').each((i, e)=>{
+            let item = {};
+            item.title = $(e).find('h3').text().trim();
+            item.subtitle = $(e).find('.kan > span').text().trim();
+            item.description = $(e).find('.kan p').text().split('.').filter((_,i)=>i!=0).join('.').trim();
+            item.update = $(e).find('.kan p').text().split('.').shift().trim();
+            item.link = bes + $(e).find('a').attr('href');
+            item.thumb = $(e).find('img').attr('src');
+            item.type = $(e).find('.tpe1_inf').text().trim();
+            result.push(item);
+        });
+        return result;
+    },
+    async info(url){
+        const { data } = await axios.get(url);
+        const $ = cheerio.load(data);
+        const result = {};
+        
+        const list = [];
+        $('table#Daftar_Chapter > tbody > tr').each((i, e)=>{
+            if (i == 0) return;
+            let item = {};
+            item.chapter = $(e).find('span').text().trim();
+            item.link = bes + $(e).find('a').attr('href');
+            item.view = $(e).find('.pembaca').text().trim();
+            item.date = $(e).find('.tanggalseries').text().trim();
+            list.push(item);
+        });
+        result.list = list;
+        
+        let syno = $('#Sinopsis p').text().trim();
+        result.sinopsis = {
+          images: [],
+          short: syno.split('\n')[0],
+          long: syno.split('\n')[1]
+        }
+        $('#Sinopsis img').each((i, _)=>result.sinopsis.images.push($(_).attr('src')));
+        result.genre = $('ul.genre').text().trim().split('\n');
+        result.info = {};
+        $('table.inftable tr').each((i, e)=>{
+          result.info[$(e).find('td:eq(0)').text().trim()] = $(e).find('td:eq(1)').text().trim();
+        })
+        return result;
+    },
+    async detail(url){
+        const { data } = await axios.get(url);
+        const $ = cheerio.load(data);
+        let out = [];
+        $('div#Baca_Komik img').each((i, e)=>{
+          out.push($(e).attr('src'))
+        })
+        return out;
+    },
+};
+
 module.exports = { 
   laheluSearch,
   ttstalk,
@@ -1478,5 +1560,7 @@ module.exports = {
   gempaterkini,
   gempadirasakan,
   JadwalSholat,
-  ssweb
+  ssweb,
+  tinyurl,
+  komiku
 }

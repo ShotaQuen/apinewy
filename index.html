@@ -1,302 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Free Rest Api.">
-<meta name="author" content="Ikann">
-<meta property="og:image" content="https://files.catbox.moe/u6j0tk.jpg">
-<title>Api's Ikann</title>
-<script src="https://kit.fontawesome.com/5367cb78eb.js" crossorigin="anonymous"></script>
-<link rel="shortcut icon" href="https://files.catbox.moe/u6j0tk.jpg"/> 
-<link href="https://zeltoria.github.io/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://zeltoria.github.io/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="https://zeltoria.github.io/css/default.css" rel="stylesheet">
-<link href="https://zeltoria.github.io/css/style.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The IkannNew Api</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  
+  <style>
 * {
 font-family: "Share Tech Mono";
 }
+
+body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #d4f0f0, #e9d8fd, #fcd5ce);
+      color: #333;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    header {
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    header img {
+      width: 120px;
+      height: 120px;
+      border-radius: 15px;
+      margin: 0 auto;
+      display: block;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #6b46c1;
+      margin-top: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+      margin: 1rem 0;
+    }
+
+    /* Button Style */
+    .custom-btn {
+      background: linear-gradient(45deg, #6b46c1, #a78bfa);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.8rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    main img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+   
+    .features {
+      margin-top: 3rem;
+    }
+
+    .features h2 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .features p {
+      font-size: 1rem;
+      color: #555;
+      margin: 0.5rem 0;
+    }
+
+.feature-card {
+  background: white;
+  padding: 6rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  max-width: 300px;
+  max-width: 300px;
+  width: 90%; 
+  margin: 0 auto; 
+}
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(45deg, #d4f0f0, #e9d8fd);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+
+    .feature-icon i {
+      font-size: 1.5rem;
+      color: #6b46c1;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      color: #6b46c1;
+      margin-bottom: 0.5rem;
+    }
+
+    
+    .team {
+      margin-top: 3rem;
+      background: white;
+      padding: 2rem 0;
+    }
+
+    .team h2 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .team p {
+      font-size: 1rem;
+      color: #555;
+      margin: 0.5rem 0;
+    }
+
+    .team-card {
+      background: #f0f0f0;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .team-card:hover {
+      transform: scale(1.05);
+    }
+
+    .team-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: block;
+    }
+
+    .team-card h3 {
+      font-size: 1.25rem;
+      color: #6b46c1;
+      margin-bottom: 0.5rem;
+    }
+
+
+    .pricing {
+      margin-top: 3rem;
+      background: white;
+      padding: 2rem 0;
+    }
+
+    .pricing h2 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .pricing p {
+      font-size: 1rem;
+      color: #555;
+      margin: 0.5rem 0;
+    }
+
+.plan-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+    .plan-card:hover {
+      transform: scale(1.05);
+    }
+
+    .plan-card h3 {
+      font-size: 1.5rem;
+      color: #6b46c1;
+      margin-bottom: 1rem;
+    }
+
+    .plan-card .price {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #6b46c1;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #d4f0f0, #e9d8fd);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      display: inline-block;
+    }
+
+    .plan-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .plan-card li {
+      display: flex;
+      align-items: center;
+      margin: 0.5rem 0;
+    }
+
+    .plan-card li i {
+      margin-right: 0.5rem;
+      color: #6b46c1;
+    }
+
+ 
+    footer {
+      background: #333;
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+
+    footer p {
+      font-size: 0.875rem;
+      margin: 0.5rem 0;
+    }
+
+    footer .copyright {
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
 </style>
-
 </head>
+<body>
 
-<body id="page-top" class="dark-mode">
-<div id="wrapper">
- 
-<ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-<img src="https://files.catbox.moe/u6j0tk.jpg" class="rounded-circle shadow-4"style="width: 50px;" alt="Avatar" />
-<div class="sidebar-brand-text mx-3">ikann</div>
-</a>
-<hr class="sidebar-divider my-0">
-<li class="nav-item active">
-<a class="nav-link" href="#">
-<i class="fas fa-fw fa-thermometer-three-quarters"></i>
-<span>STATUS</span></a>
-</li>
-<hr class="sidebar-divider">
-<div class="sidebar-heading">
-Api
-</div>
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ai" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-robot"></i>
-<span>Ai</span>
-</a>
-<div id="ai" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/viooai?q=hello" target="_blank">ViooAi</a>
-</div>
-</div>
-</li>
+  <!-- Header -->
+  <header>
+    <img alt="Ikann" src="https://unitedcamps.in/Images/IMG_1742485635.jpg">
+  </header>
 
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#search" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-search"></i>
-<span>Search</span>
-</a>
-<div id="search" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/lahelu?q=anime" target="_blank">Lahelu</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/githubSearch?q=webapi" target="_blank">Github Search</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/pin?q=ikann" target="_blank">Pinterest</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/modcombo?q=minecraft" target="_blank">Mod Combo</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/happymod?q=minecraft" target="_blank">Happymod</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/Apk4Free?q=minecraft" target="_blank">Apk4Free</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/anime?q=naruto" target="_blank">Otaku Desu</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/sfileSearch?q=pixellab" target="_blank">Sfile Search</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/jadwalsholat?q=Pekalongan" target="_blank">Jadwal Sholat</a>
-</div>
-</div>
-</li>
-
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#stalk" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-star"></i>
-<span>Stalk</span>
-</a>
-<div id="stalk" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/ttstalk?q=ikanngeming" target="_blank">Tiktok Stalk</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/npmStalk?q=ikanngeming" target="_blank">Npm Stalk</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/ffStalk?q=12345678" target="_blank">FF Stalk</a>
-</div>
-</div>
-</div>
-</li>
-
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bmkg" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-house-crack"></i>
-<span>Bmkg</span>
-</a>
-<div id="bmkg" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/autogempa" target="_blank">Auto Gempa</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/gempaterkini" target="_blank">Gempa Terkini</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/gempadirasakan" target="_blank">Gempa Dirasakan</a>
-</div>
-</div>
-</div>
-</li>
-
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#download" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-download"></i>
-<span>Downloader</span>
-</a>
-<div id="download" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/mediafire?q=https://www.mediafire.com/file/717lb2o73wi7gga/Simple_Botz_V6_Ori%252C_Dapat_Dari_Skyzo.zip/file" target="_blank">Media Fire</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/ytmp4?url=https://youtu.be/VSmQGxN9kw8?si=WJIMuCiPtjRRsHuV&quality=480" target="_blank">Ytmp4</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/ytmp3?url=https://youtu.be/VSmQGxN9kw8?si=WJIMuCiPtjRRsHuV&quality=192" target="_blank">Ytmp3</a>
-</div>
-</div>
-</div>
-</li>
-
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tools" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-tools"></i>
-<span>Tools</span>
-</a>
-<div id="tools" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/ssweb?q=https://ikannnew.vercel.app" target="_blank">Ssweb</a>
-</div>
-</div>
-</div>
-</li>
-
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#orkut" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-money"></i>
-<span>Orkut</span>
-</a>
-<div id="orkut" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/orkut/createpayment?amount=&codeqr=" target="_blank">Create Payment</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/orkut/cekstatus?merchant=&keyorkut=" target="_blank">Cek Status</a>
-</div>
-</div>
-</div>
-</li>
-
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Islam" aria-expanded="true" aria-controls="collapseBootstrap">
-<i class="fa fa-kaaba"></i>
-<span>Islam</span>
-</a>
-<div id="Islam" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-<div class="py-2 collapse-inner rounded">
-<div class="py-2 collapse-inner rounded">
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/islam/surah" target="_blank">Surat</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/islam/nosurat?q=1" target="_blank">Nomor Surat</a>
-<a class="collapse-item" href="https://Ikannnew.vercel.app/api/islam/namasurat?q=Al Fatihah" target="_blank">Nama Surat</a>
-</div>
-</div>
-</div>
-</li>
-<hr class="sidebar-divider">
-</ul>
- 
-<div id="content-wrapper" class="d-flex flex-column">
-<div id="content">
-
-<nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-<button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
-<i class="fa fa-bars"></i>
-</button>
-<ul class="navbar-nav ml-auto">
-<li class="nav-item dropdown no-arrow">
-<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<img src="https://files.catbox.moe/u6j0tk.jpg" class="rounded-circle shadow-4"style="width: 50px;" alt="Avatar" />
-<span class="ml-2 d-none d-lg-inline small font-weight-bold"></span>
-</a>
-</li>
-</ul>
-</nav>
-
-<div class="container-fluid" id="container-wrapper">
-<div class="card h-50 mb-4">
-<div class="card-body">
-<div class="row align-items-center">
-<div class="col mr-2">
-<div class="text-md-left font-weight-bold mb-2 text-primary">ApiNew</div>
-<div class="text-sm-left mb-0 font-weight-bold">By ikann and friend
-</div>
-</div>
-<div class="col-auto">
-<i class="fas fa-quote-right fa-2x text-primary"></i>
-</div>
-</div>
-</div>
-</div>
-
-<div class="row mb-3">
-
-<div class="col-xl-3 col-md-6 mb-4">
-<div class="card h-50">
-<div class="card-body">
-<div class="row no-gutters align-items-center">
-<div class="col mr-2">
-<div class="text-xs font-weight-bold text-uppercase mb-1">Post</div>
-<span id="getawayCont" class="h5 mb-0 font-weight-bold">0 </span>
-</div>
-<div class="col-auto">
-<i class="fa fa-fire" ></i>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="col-xl-3 col-md-6 mb-4">
-<div class="card h-50">
-<div class="card-body">
-<div class="row no-gutters align-items-center">
-<div class="col mr-2">
-<div class="text-xs font-weight-bold text-uppercase mb-1">Battery</div>
-<span id="battery_level" class="h5 mb-0 font-weight-bold">Loading... </span>
-</div>
-<div class="col-auto">
-<i class="fa fa-battery-full" ></i>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="col-xl-3 col-md-6 mb-4">
-<div class="card h-50">
-<div class="card-body">
-<div class="row no-gutters align-items-center">
-<div class="col mr-2">
-<div class="text-xs font-weight-bold text-uppercase mb-1">Time</div>
-<div class="h5 mb-0 font-weight-bold" id="row-no-guttersalign-items-center">Loading...</div>
-<div class="h5 mb-0 font-weight-bold" id="text-xsfont-weight-boldtext-uppercase-mb-1"></div>
-</div>
-<div class="col-auto">
-<i class="fas fa-calendar fa-2x text-primary"></i>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="row">
-<div class="col-lg-12 text-center">
-Contact Me
-<p>
-
-<a href="https://wa.me/6285765183832" class="btn btn-primary btn-sm ml-2" target="_blank"><i class="fa-brands fa-whatsapp"></i>&nbsp;Whatsapp</a>
-</p>
-</div>
-</div>
-</div>
-
-</div>
- 
-<footer class="sticky-footer">
-<div class="container my-auto">
-<div class="copyright text-center my-auto">
-Made by
-<a href="#" target="_blank" style="color: rgb(224, 32, 7);">ikann</a>
-</span>
-</div>
-</div>
-</footer>
- 
-</div>
-</div>
-
-
-<a class="scroll-to-top rounded" href="#page-top">
-<i class="fas fa-angle-up"></i>
-</a>
-
-
-<script src="https://zeltoria.github.io/vendor/jquery/jquery.min.js"></script>
-<script src="https://zeltoria.github.io/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="https://zeltoria.github.io/vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="https://zeltoria.github.io/js/ruang-admin.min.js"></script>
-<script src="https://zeltoria.github.io/js/menu.js"></script>
-<script>
-const countCollapseItem = document.querySelectorAll('.collapse-item').length;
-
-document.getElementById('getawayCont').textContent = `${countCollapseItem}`;
-</script>
+  
+  <main>
+    <h1>All-in-One API Application for Your Business</h1>
+    <p>Build, modify, and optimize your API instantly—no coding required. The live customizer makes it simple.</p>
+    <form action="doc.html">
+    <button class="custom-btn">Get Access</button>
+    </form>
+    <div>
+      <img alt="Dashboard and statistics overview of the API application" src="https://files.catbox.moe/okudwr.jpg">
+    </div>
+  </main>
+  <section class="features">
+    <h2><i class="fas fa-check-double" style="color: green;"></i> USEFUL FEATURES</h2>
+    <p>Everything you need to start your project application.</p>
+    <p>Some tools are ready to use and can be used for your application needs.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-cloud-download-alt"></i></div>
+        <h3>Downloader</h3>
+        <p>Download feature that makes it easy to download files on social media.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-user-secret"></i></div>
+        <h3>Stalk Account</h3>
+        <p>Stalk and analyze accounts anonymously without opening the app.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-search"></i></div>
+        <h3>Search Data</h3>
+        <p>Search for data on the internet starting from Google, YouTube, Instagram, Playstore, and others.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-pen"></i></div>
+        <h3>Maker Generative</h3>
+        <p>Create a text logo with ephoto maker or canvas API with result image.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-code"></i></div>
+        <h3>JSON Result</h3>
+        <p>JSON results are easy to use in JavaScript code and other programming languages.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+        <h3>Fast API</h3>
+        <p>Fast API REST response in less than 60 seconds will send data.</p>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div>
+      <p class="copyright">© 2.025 • IkannNew</p>
+    </div>
+  </footer>
 
 </body>
-
 </html>
